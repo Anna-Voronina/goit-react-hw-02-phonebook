@@ -19,12 +19,6 @@ export class ContactForm extends Component {
   handleSubmit = event => {
     event.preventDefault();
     const { name, number } = this.state;
-    const isAlreadyInContacts = this.props.onAddSameContact(name);
-
-    if (isAlreadyInContacts) {
-      alert(`${name} is already in contacts.`);
-      return;
-    }
 
     this.props.addContact({ name, number });
     this.setState({ ...INITIAL_STATE });
@@ -73,5 +67,4 @@ export class ContactForm extends Component {
 
 ContactForm.propTypes = {
   addContact: PropTypes.func.isRequired,
-  onAddSameContact: PropTypes.func.isRequired,
 };

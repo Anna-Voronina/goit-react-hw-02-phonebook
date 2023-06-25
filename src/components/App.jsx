@@ -12,6 +12,12 @@ export class App extends Component {
   };
 
   addContactItem = ({ name, number }) => {
+    const isAlreadyInContacts = this.preventAddingSameContact(name);
+    if (isAlreadyInContacts) {
+      alert(`${name} is already in contacts.`);
+      return;
+    }
+
     const newContact = { id: nanoid(), name, number };
     this.setState(prevState => ({
       contacts: [...prevState.contacts, newContact],
@@ -47,26 +53,27 @@ export class App extends Component {
   };
 
   render() {
-    const { filter } = this.state;
+    const { contacts, filter } = this.state;
     const filteredContacts = this.getFilteredContacts();
 
     return (
       <div className={css.container}>
         <h1 className={css.title}>Phonebook</h1>
-        <ContactForm
-          addContact={this.addContactItem}
-          onAddSameContact={this.preventAddingSameContact}
-        />
+        <ContactForm addContact={this.addContactItem} />
 
         <h2 className={css.title}>Contacts</h2>
         <Filter
           filterValue={filter}
           onFilterChange={this.handleFilterInputChange}
         />
-        <ContactList
-          contacts={filteredContacts}
-          onDeleteContact={this.deleteContactItem}
-        />
+        {contacts.length === 0 ? (
+          <h3>There are no contacts in your phone book.</h3>
+        ) : (
+          <ContactList
+            contacts={filteredContacts}
+            onDeleteContact={this.deleteContactItem}
+          />
+        )}
       </div>
     );
   }

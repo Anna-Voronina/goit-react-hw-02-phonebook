@@ -3,28 +3,22 @@ import css from './ContactList.module.css';
 
 export const ContactList = ({ contacts, onDeleteContact }) => {
   return (
-    <>
-      {contacts.length === 0 ? (
-        <h3>There are no contacts in your phone book.</h3>
-      ) : (
-        <ul className={css.contactList}>
-          {contacts.map(({ name, id, number }) => (
-            <li key={id} className={css.contactListItem}>
-              <span className={css.contactListItemText}>
-                {name}: {number}
-              </span>
-              <button
-                className={css.contactListItemBtn}
-                type="button"
-                onClick={() => onDeleteContact(id)}
-              >
-                Delete
-              </button>
-            </li>
-          ))}
-        </ul>
-      )}
-    </>
+    <ul className={css.contactList}>
+      {contacts.map(({ name, id, number }) => (
+        <li key={id} className={css.contactListItem}>
+          <span className={css.contactListItemText}>
+            {name}: {number}
+          </span>
+          <button
+            className={css.contactListItemBtn}
+            type="button"
+            onClick={() => onDeleteContact(id)}
+          >
+            Delete
+          </button>
+        </li>
+      ))}
+    </ul>
   );
 };
 
